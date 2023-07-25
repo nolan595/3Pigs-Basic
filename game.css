@@ -6,15 +6,17 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: black;
   overflow: hidden; /* Prevents scrolling */
 }
 
 .container {
+  background-color: black;
+
   height: 100%;
   width: 100%;
   position: relative;
   box-sizing: border-box;
-  background-color: black;
 }
 
 .canvas-container {

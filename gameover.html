@@ -23,6 +23,7 @@
         height: 526px;
         width: 1024px;
         border: 1px solid white;
+        background-image: url("./img/gameover-bg.png");
       }
 
       h1 {
@@ -55,6 +56,13 @@
     </div>
 
     <script>
+      window.onload = function () {
+        if (localStorage.getItem("playerFell") === "true") {
+          let fallSound = new Audio("./sounds/you-lose.mp3");
+          fallSound.play();
+          localStorage.removeItem("playerFell");
+        }
+      };
       document.getElementById("playerScore").innerText =
         localStorage.getItem("playerScore") || 0;
 

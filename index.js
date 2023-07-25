@@ -13,6 +13,7 @@ import {
   spriteStandRight,
   spriteFireFlower,
   coin,
+  coinSound,
 } from "./constants.js";
 
 const canvas = document.querySelector("canvas");
@@ -115,6 +116,8 @@ class Player {
       if (!onPlatform) {
         console.log("Player fell off");
         localStorage.setItem("playerScore", points);
+        localStorage.setItem("playerFell", "true");
+
         window.location.href = "gameover.html";
       }
     }
@@ -186,6 +189,7 @@ class Collectible {
     if (!this.collected && checkCollision(player, this)) {
       this.collected = true;
       points++;
+      grabCoin();
       console.log("coin collected" + points);
     }
   }
@@ -195,6 +199,14 @@ function createImage(imageSrc) {
   const image = new Image();
   image.src = imageSrc;
   return image;
+}
+
+function grabCoin() {
+  coinSound.play();
+}
+
+function youLose() {
+  youLose.play();
 }
 
 function checkCollision(a, b) {

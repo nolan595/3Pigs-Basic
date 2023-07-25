@@ -35,3 +35,6 @@ spriteStandRight.src = "./img/spriteStandRight.png";
 
 export const coin = new Image();
 coin.src = "./img/coin.png";
+
+export const coinSound = new Audio("./sounds/homer-woohoo.mp3");
+export const youLose = new Audio("./sounds/you-lose.mp3");

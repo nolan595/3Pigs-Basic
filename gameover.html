@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Over</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 526px;
+        width: 1024px;
+        border: 1px solid white;
+      }
+
+      h1 {
+        font-size: 2em;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      a,
+      button {
+        background-color: white;
+        color: black;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        font-size: 1em;
+        text-decoration: none;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Game Over</h1>
+      <p>Your Score: <span id="playerScore"></span></p>
+      <a href="index.html">Play Again</a>
+      <button id="shareButton">Share Game</button>
+    </div>
+
+    <script>
+      document.getElementById("playerScore").innerText =
+        localStorage.getItem("playerScore") || 0;
+
+      document
+        .getElementById("shareButton")
+        .addEventListener("click", function () {
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Check out this cool game I played!",
+                url: window.location.origin + "/index.html",
+              })
+              .catch(console.error);
+          } else {
+            // Fallback for browsers that do not support the Web Share API
+            alert("Your browser does not support the share feature.");
+          }
+        });
+    </script>
+  </body>
+</html>

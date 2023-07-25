@@ -1,0 +1,65 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents scrolling */
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+.canvas-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#myCanvas {
+  position: relative;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.left-container,
+.right-container {
+  display: flex;
+}
+
+.game-button {
+  margin: 10px;
+}
+
+#left-button,
+#right-button,
+#up-button {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjust the pixel value to the breakpoint you want */
+  #left-button,
+  #right-button,
+  #up-button {
+    display: block;
+  }
+}

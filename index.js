@@ -14,6 +14,8 @@ import {
   spriteFireFlower,
   coin,
   coinSound,
+  youLose,
+  youWin,
 } from "./constants.js";
 
 const canvas = document.querySelector("canvas");
@@ -37,6 +39,7 @@ class Player {
       x: 0,
       y: 0,
     };
+    this.hasWon = false;
     this.width = 66;
     this.height = 150;
     this.image = spriteStandRight;
@@ -189,7 +192,7 @@ class Collectible {
     if (!this.collected && checkCollision(player, this)) {
       this.collected = true;
       points++;
-      grabCoin();
+      coinSound.play();
       console.log("coin collected" + points);
     }
   }
@@ -199,14 +202,6 @@ function createImage(imageSrc) {
   const image = new Image();
   image.src = imageSrc;
   return image;
-}
-
-function grabCoin() {
-  coinSound.play();
-}
-
-function youLose() {
-  youLose.play();
 }
 
 function checkCollision(a, b) {
@@ -376,8 +371,10 @@ function animate() {
 
   // you win scenario
   const lastPlatform = platforms[platforms.length - 1];
-  if (player.position.x >= lastPlatform.position.x) {
+  if (player.position.x >= lastPlatform.position.x && !player.hasWon) {
     console.log("You Win!");
+    youWin.play();
+    player.hasWon = true;
   }
 
   if (player.position.y > canvas.height) {

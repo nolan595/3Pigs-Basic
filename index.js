@@ -16,17 +16,17 @@ import {
   coinSound,
   youLose,
   youWin,
+  newPlatform,
 } from "./constants.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
 canvas.width = 1024;
-canvas.height = 526;
+canvas.height = 700;
+const scaleFactor = canvas.width / 1024;
 
 const gravity = 0.5;
-
-// Rest of your code...
 
 class Player {
   constructor() {
@@ -242,31 +242,48 @@ function init() {
   player = new Player();
 
   platforms = [
-    new Platform({ x: platformWidth * 4 - 3 + 585, y: 270, image: smallTall }),
-    new Platform({ x: -1, y: 470, image: platform }),
-    new Platform({ x: platformWidth - 3, y: 470, image: platform }),
-    new Platform({ x: platformWidth * 2 + 100, y: 470, image: platform }),
-    new Platform({ x: platformWidth * 3 + 300, y: 470, image: platform }),
-    new Platform({ x: platformWidth * 4 - 3 + 300, y: 470, image: platform }),
-    new Platform({ x: platformWidth * 5 - 3 + 750, y: 470, image: platform }),
+    new Platform({ x: platformWidth * 4 - 3 + 585, y: 475, image: smallTall }),
+    new Platform({
+      x: platformWidth * 5 - 3 + 585,
+      y: 120,
+      image: newPlatform,
+    }),
+    new Platform({
+      x: platformWidth * 6 - 3 + 585,
+      y: 220,
+      image: newPlatform,
+    }),
+    new Platform({
+      x: platformWidth * 7 - 3 + 585,
+      y: 180,
+      image: newPlatform,
+    }),
+    new Platform({ x: -1, y: 580, image: platform }),
+    new Platform({ x: platformWidth - 3, y: 580, image: platform }),
+    new Platform({ x: platformWidth * 2 + 100, y: 580, image: platform }),
+    new Platform({ x: platformWidth * 3 + 300, y: 580, image: platform }),
+    new Platform({ x: platformWidth * 4 - 3 + 300, y: 580, image: platform }),
+    new Platform({ x: platformWidth * 5 - 3 + 600, y: 300, image: platform }),
+    new Platform({ x: platformWidth * 6 - 3 + 750, y: 580, image: platform }),
+    new Platform({ x: platformWidth * 7 - 3 + 850, y: 400, image: platform }),
+    new Platform({
+      x: platformWidth * 8 - 3 + 950,
+      y: 200,
+      image: newPlatform,
+    }),
   ];
 
   genericObjects = [
-    new GenericObject({
-      x: -1,
-      y: -1,
-      image: bg,
-    }),
-    new GenericObject({
-      x: -1,
-      y: -1,
-      image: hills,
-    }),
+    new GenericObject({ x: -1, y: -1, image: bg }),
+    new GenericObject({ x: -1, y: -1, image: hills }),
   ];
 
   coins = [
     new Collectible({ x: 500, y: 300, image: coin }),
     new Collectible({ x: 700, y: 200, image: coin }),
+    new Collectible({ x: platformWidth * 5 + 625, y: 260, image: coin }),
+    new Collectible({ x: platformWidth * 7 + 875, y: 360, image: coin }),
+    new Collectible({ x: platformWidth * 8 + 975, y: 160, image: coin }),
   ];
 
   scrollOffset = 0;
@@ -375,6 +392,8 @@ function animate() {
     console.log("You Win!");
     youWin.play();
     player.hasWon = true;
+    localStorage.setItem("playerScore", points);
+    //window.location.href = "gameWin.html";
   }
 
   if (player.position.y > canvas.height) {
@@ -465,4 +484,9 @@ rightButton.addEventListener("touchend", function () {
 
 upButton.addEventListener("touchstart", function () {
   player.velocity.y -= 15;
+});
+
+window.addEventListener("resize", function () {
+  canvas.width = window.innerWidth - 2 * 10;
+  canvas.height = 0.7 * window.innerHeight;
 });

@@ -36,6 +36,9 @@ spriteStandRight.src = "./img/spriteStandRight.png";
 export const coin = new Image();
 coin.src = "./img/coin.png";
 
+export const newPlatform = new Image();
+newPlatform.src = "./img/curvedPlatform.png";
+
 export const coinSound = new Audio("./sounds/homer-woohoo.mp3");
 export const youLose = new Audio("./sounds/you-lose.mp3");
 export const youWin = new Audio("./sounds/congratulations-trump.mp3");

@@ -5,24 +5,31 @@ import {
   platformHeight,
   hills,
   smallTall,
-  smallTallWidth,
-  jackG,
   spriteRunLeft,
   spriteRunRight,
   spriteStandLeft,
   spriteStandRight,
-  spriteFireFlower,
   coin,
   coinSound,
-  youLose,
   youWin,
   newPlatform,
-} from "./constants.js";
+  curvedLrgPlatform,
+  balloon,
+  pig1,
+  pig2,
+} from "./images.js";
+
+import {
+  createPlatforms,
+  createGenericObjects,
+  createCoins,
+  createProps,
+} from "./levelCreation.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 1024;
+canvas.width = 1400;
 canvas.height = 700;
 const scaleFactor = canvas.width / 1024;
 
@@ -147,6 +154,26 @@ class Platform {
   }
 }
 
+class Props {
+  constructor({ x, y, image }) {
+    this.position = {
+      x,
+      y,
+    };
+
+    this.image = image;
+
+    image.addEventListener("load", () => {
+      this.width = image.width;
+      this.height = image.height;
+    });
+  }
+
+  draw() {
+    c.drawImage(this.image, this.position.x, this.position.y);
+  }
+}
+
 class GenericObject {
   constructor({ x, y, image }) {
     this.position = {
@@ -198,12 +225,6 @@ class Collectible {
   }
 }
 
-function createImage(imageSrc) {
-  const image = new Image();
-  image.src = imageSrc;
-  return image;
-}
-
 function checkCollision(a, b) {
   return (
     a.position.x < b.position.x + b.width &&
@@ -216,6 +237,7 @@ function checkCollision(a, b) {
 let player = new Player();
 
 let platforms = [];
+let props = [];
 
 let genericObjects = [];
 let points = 0;
@@ -241,50 +263,27 @@ let upButton = document.getElementById("up-button");
 function init() {
   player = new Player();
 
-  platforms = [
-    new Platform({ x: platformWidth * 4 - 3 + 585, y: 475, image: smallTall }),
-    new Platform({
-      x: platformWidth * 5 - 3 + 585,
-      y: 120,
-      image: newPlatform,
-    }),
-    new Platform({
-      x: platformWidth * 6 - 3 + 585,
-      y: 220,
-      image: newPlatform,
-    }),
-    new Platform({
-      x: platformWidth * 7 - 3 + 585,
-      y: 180,
-      image: newPlatform,
-    }),
-    new Platform({ x: -1, y: 580, image: platform }),
-    new Platform({ x: platformWidth - 3, y: 580, image: platform }),
-    new Platform({ x: platformWidth * 2 + 100, y: 580, image: platform }),
-    new Platform({ x: platformWidth * 3 + 300, y: 580, image: platform }),
-    new Platform({ x: platformWidth * 4 - 3 + 300, y: 580, image: platform }),
-    new Platform({ x: platformWidth * 5 - 3 + 600, y: 300, image: platform }),
-    new Platform({ x: platformWidth * 6 - 3 + 750, y: 580, image: platform }),
-    new Platform({ x: platformWidth * 7 - 3 + 850, y: 400, image: platform }),
-    new Platform({
-      x: platformWidth * 8 - 3 + 950,
-      y: 200,
-      image: newPlatform,
-    }),
-  ];
+  platforms = createPlatforms(
+    Platform,
+    platformWidth,
+    smallTall,
+    newPlatform,
+    platform,
+    curvedLrgPlatform,
+    balloon,
+    pig1,
+    pig2
+  );
+  genericObjects = createGenericObjects(
+    GenericObject,
+    bg,
+    hills,
 
-  genericObjects = [
-    new GenericObject({ x: -1, y: -1, image: bg }),
-    new GenericObject({ x: -1, y: -1, image: hills }),
-  ];
+    platformWidth
+  );
+  coins = createCoins(Collectible, platformWidth, coin);
 
-  coins = [
-    new Collectible({ x: 500, y: 300, image: coin }),
-    new Collectible({ x: 700, y: 200, image: coin }),
-    new Collectible({ x: platformWidth * 5 + 625, y: 260, image: coin }),
-    new Collectible({ x: platformWidth * 7 + 875, y: 360, image: coin }),
-    new Collectible({ x: platformWidth * 8 + 975, y: 160, image: coin }),
-  ];
+  props = createProps(Props, platformWidth, pig1, pig2, balloon);
 
   scrollOffset = 0;
 }
@@ -295,6 +294,10 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   genericObjects.forEach((genericObject) => {
     genericObject.draw();
+  });
+
+  props.forEach((prop) => {
+    prop.draw();
   });
 
   coins.forEach((coin) => {
@@ -322,6 +325,10 @@ function animate() {
         platform.position.x -= player.speed;
       });
 
+      props.forEach((prop) => {
+        prop.position.x -= player.speed;
+      });
+
       genericObjects.forEach((genericObject) => {
         genericObject.position.x -= player.speed * 0.66;
       });
@@ -333,6 +340,10 @@ function animate() {
       scrollOffset -= player.speed;
       platforms.forEach((platform) => {
         platform.position.x += player.speed;
+      });
+
+      props.forEach((prop) => {
+        prop.position.x += player.speed;
       });
 
       genericObjects.forEach((genericObject) => {
@@ -393,7 +404,7 @@ function animate() {
     youWin.play();
     player.hasWon = true;
     localStorage.setItem("playerScore", points);
-    //window.location.href = "gameWin.html";
+    window.location.href = "gameWin.html";
   }
 
   if (player.position.y > canvas.height) {

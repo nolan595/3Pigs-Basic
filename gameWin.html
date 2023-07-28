@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Over</title>
+    <title>Congratulations!</title>
     <style>
       body {
         background-color: black;
@@ -44,6 +44,7 @@
         font-size: 1em;
         text-decoration: none;
         margin-bottom: 1rem;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -56,30 +57,22 @@
     </div>
 
     <script>
-      window.onload = function () {
-        if (localStorage.getItem("playerFell") === "true") {
-          let fallSound = new Audio("./sounds/you-lose.mp3");
-          fallSound.play();
-          localStorage.removeItem("playerFell");
-        }
-      };
       document.getElementById("playerScore").innerText =
         localStorage.getItem("playerScore") || 0;
 
       document
         .getElementById("shareButton")
         .addEventListener("click", function () {
-          if (navigator.share) {
-            navigator
-              .share({
-                title: "Check out this cool game I played!",
-                url: window.location.origin + "/index.html",
-              })
-              .catch(console.error);
-          } else {
-            // Fallback for browsers that do not support the Web Share API
-            alert("Your browser does not support the share feature.");
-          }
+          const playerScore = localStorage.getItem("playerScore") || 0;
+          const shareText = `I just completed 3Pigs' cool new game with a score of ${playerScore}, can you beat me?\n\n${window.location.origin}/index.html`;
+          navigator.clipboard
+            .writeText(shareText)
+            .then(() => {
+              alert("Share text copied to clipboard!");
+            })
+            .catch((err) => {
+              console.error("Could not copy text: ", err);
+            });
         });
     </script>
   </body>

@@ -39,6 +39,18 @@ coin.src = "./img/coin.png";
 export const newPlatform = new Image();
 newPlatform.src = "./img/curvedPlatform.png";
 
+export const pig1 = new Image();
+pig1.src = "./img/Pork-Fiction.png";
+
+export const pig2 = new Image();
+pig2.src = "img/David-Hasselhog.png";
+
+export const balloon = new Image();
+balloon.src = "./img/balloon.png";
+
+export const curvedLrgPlatform = new Image();
+curvedLrgPlatform.src = "./img/curvedLrgPlatform.png";
+
 export const coinSound = new Audio("./sounds/homer-woohoo.mp3");
 export const youLose = new Audio("./sounds/you-lose.mp3");
 export const youWin = new Audio("./sounds/congratulations-trump.mp3");

@@ -44,6 +44,7 @@
         font-size: 1em;
         text-decoration: none;
         margin-bottom: 1rem;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -63,22 +64,22 @@
           localStorage.removeItem("playerFell");
         }
       };
-      document.getElementById("playerScore").innerText =
-        localStorage.getItem("playerScore") || 0;
+
+      const playerScore = localStorage.getItem("playerScore") || 0;
+      document.getElementById("playerScore").innerText = playerScore;
 
       document
         .getElementById("shareButton")
         .addEventListener("click", function () {
-          if (navigator.share) {
-            navigator
-              .share({
-                title: "Check out this cool game I played!",
-                url: window.location.origin + "/index.html",
-              })
-              .catch(console.error);
-          } else {
-            alert("Your browser does not support the share feature.");
-          }
+          const shareText = `I just scored ${playerScore} point in 3Pigs' cool new game, can you beat me?\n\n${window.location.origin}/index.html`;
+          navigator.clipboard
+            .writeText(shareText)
+            .then(() => {
+              alert("Share text copied to clipboard!");
+            })
+            .catch((err) => {
+              console.error("Could not copy text: ", err);
+            });
         });
     </script>
   </body>

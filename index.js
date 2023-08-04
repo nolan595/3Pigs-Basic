@@ -70,6 +70,7 @@ class Player {
     this.hasWon = false;
     this.width = 66;
     this.height = 150;
+    this.isJumping = false;
     this.image = spriteStandRight;
     this.frames = 0;
     this.sprites = {
@@ -142,13 +143,13 @@ class Player {
         ) {
           onPlatform = true;
           this.velocity.y = 0;
+          this.isJumping = false; // set player.isJumping to false when on a platform
         }
       });
 
       if (!onPlatform) {
         localStorage.setItem("playerScore", points);
         localStorage.setItem("playerFell", "true");
-
         // window.location.href = "gameover.html";
       }
     }
@@ -459,7 +460,11 @@ window.addEventListener("keydown", ({ keyCode }) => {
     case 87:
     case 38:
     case 32:
-      player.velocity.y -= 20;
+      // Only jump if the player is on the ground
+      if (!player.isJumping) {
+        player.velocity.y -= 20;
+        player.isJumping = true;
+      }
       break;
 
     case 83:
@@ -521,7 +526,10 @@ rightButton.addEventListener("touchend", function () {
 });
 
 upButton.addEventListener("touchstart", function () {
-  player.velocity.y -= 15;
+  if (!player.isJumping) {
+    player.velocity.y -= 15;
+    player.isJumping = true;
+  }
 });
 
 window.addEventListener("resize", function () {

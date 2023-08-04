@@ -54,11 +54,11 @@ window.addEventListener("resize", function () {
   resizeCanvas();
 });
 
-const gravity = 0.5;
+let gravity = window.innerWidth < 600 ? 1.5 : 1;
 
 class Player {
   constructor() {
-    this.speed = 10;
+    this.speed = window.innerWidth < 600 ? 15 : 10;
     this.position = {
       x: canvas.width / 2 - 180,
       y: 100,

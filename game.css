@@ -67,8 +67,8 @@ html {
   #right-button,
   #up-button {
     display: block;
-    width: 10px; /* Adjust as necessary */
-    height: 10px; /* Adjust as necessary */
+    width: 80px; /* Adjust as necessary */
+    height: 80px; /* Adjust as necessary */
     border-radius: 50%; /* Makes the button circular */
   }
 }

@@ -29,9 +29,30 @@ import {
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 1400;
-canvas.height = 700;
-const scaleFactor = canvas.width / 1024;
+function resizeCanvas() {
+  // Get the new window size
+  let newWidth = window.innerWidth;
+  let newHeight = window.innerHeight;
+
+  // Adjust the canvas size
+  newWidth = newWidth - 2 * 10;
+  newHeight = newHeight * 0.7 > 700 ? 700 : newHeight * 0.7;
+
+  canvas.width = newWidth;
+  canvas.height = newHeight;
+
+  // Log the new size to the console
+  console.log(`Screen Size: ${window.innerWidth} x ${window.innerHeight}`);
+  console.log(`New canvas size: ${canvas.width} x ${canvas.height}`);
+}
+
+// Call the resize function initially when the script loads
+resizeCanvas();
+
+window.addEventListener("resize", function () {
+  // Then call it again whenever the window size changes
+  resizeCanvas();
+});
 
 const gravity = 0.5;
 
@@ -102,6 +123,11 @@ class Player {
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
 
+    // Check if player is off screen to the left
+    if (this.position.x < 0) {
+      this.position.x = 0;
+    }
+
     if (this.position.y + this.height + this.velocity.y <= canvas.height) {
       this.velocity.y += gravity;
     } else {
@@ -119,16 +145,11 @@ class Player {
         }
       });
 
-      if (this.position.x < 0) {
-        this.position.x = 0;
-      }
-
       if (!onPlatform) {
-        console.log("Player fell off");
         localStorage.setItem("playerScore", points);
         localStorage.setItem("playerFell", "true");
 
-        window.location.href = "gameover.html";
+        // window.location.href = "gameover.html";
       }
     }
   }
@@ -337,8 +358,8 @@ function animate() {
         coin.position.x -= player.speed;
       });
     } else if (keys.left.pressed && scrollOffset > 0) {
-      scrollOffset -= player.speed;
       platforms.forEach((platform) => {
+        scrollOffset -= player.speed;
         platform.position.x += player.speed;
       });
 
@@ -408,9 +429,8 @@ function animate() {
   }
 
   if (player.position.y > canvas.height) {
-    console.log("Player fell off");
     localStorage.setItem("playerScore", points);
-    window.location.href = "gameover.html";
+    // window.location.href = "gameover.html";
   }
 }
 

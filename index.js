@@ -482,6 +482,9 @@ leftButton.addEventListener("touchstart", function () {
 
 leftButton.addEventListener("touchend", function () {
   keys.left.pressed = false;
+  player.currentSprite = player.sprites.stand.left;
+  player.currentCropWidth = player.sprites.stand.cropWidth;
+  player.width = player.sprites.stand.width;
 });
 
 rightButton.addEventListener("touchstart", function () {
@@ -491,6 +494,9 @@ rightButton.addEventListener("touchstart", function () {
 
 rightButton.addEventListener("touchend", function () {
   keys.right.pressed = false;
+  player.currentSprite = player.sprites.stand.right;
+  player.currentCropWidth = player.sprites.stand.cropWidth;
+  player.width = player.sprites.stand.width;
 });
 
 upButton.addEventListener("touchstart", function () {

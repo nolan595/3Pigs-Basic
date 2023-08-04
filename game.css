@@ -49,6 +49,10 @@ html {
 
 .game-button {
   margin: 10px;
+  width: 60px; /* Adjust as necessary */
+  height: 60px; /* Adjust as necessary */
+  font-size: 2em;
+  border-radius: 50%; /* Makes the button circular */
 }
 
 #left-button,
@@ -63,5 +67,8 @@ html {
   #right-button,
   #up-button {
     display: block;
+    width: 80px; /* Adjust as necessary */
+    height: 80px; /* Adjust as necessary */
+    border-radius: 50%; /* Makes the button circular */
   }
 }

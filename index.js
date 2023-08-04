@@ -54,7 +54,7 @@ window.addEventListener("resize", function () {
   resizeCanvas();
 });
 
-const gravity = 0.5;
+let gravity = window.innerWidth < 600 ? 0.75 : 0.5; // 1.5 for mobile, 1 for larger screens
 
 class Player {
   constructor() {

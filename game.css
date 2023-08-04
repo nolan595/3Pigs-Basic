@@ -49,8 +49,8 @@ html {
 
 .game-button {
   margin: 10px;
-  width: 60px; /* Adjust as necessary */
-  height: 60px; /* Adjust as necessary */
+  width: 10px; /* Adjust as necessary */
+  height: 10px; /* Adjust as necessary */
   font-size: 2em;
   border-radius: 50%; /* Makes the button circular */
 }

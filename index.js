@@ -330,11 +330,11 @@ function animate() {
   });
   player.update();
 
-  if (keys.right.pressed && player.position.x < 100) {
+  if (keys.right.pressed && player.position.x < 50) {
     // change this line to
     player.velocity.x = player.speed;
   } else if (
-    (keys.left.pressed && player.position.x > 100) || // change this based on window width
+    (keys.left.pressed && player.position.x > 50) || // change this based on window width
     (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)
   ) {
     player.velocity.x = -player.speed;

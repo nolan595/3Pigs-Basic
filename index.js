@@ -36,7 +36,7 @@ function resizeCanvas() {
 
   // Adjust the canvas size
   newWidth = newWidth - 2 * 10;
-  newHeight = newHeight * 0.7 > 700 ? 700 : newHeight * 0.7;
+  newHeight = newHeight * 0.7;
 
   canvas.width = newWidth;
   canvas.height = newHeight;

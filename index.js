@@ -431,7 +431,7 @@ function animate() {
 
   if (player.position.y > canvas.height) {
     localStorage.setItem("playerScore", points);
-    // window.location.href = "gameover.html";
+    window.location.href = "gameover.html";
   }
 }
 
